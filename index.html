@@ -1,1325 +1,1483 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saul's Hot Dogs - Gourmet Catering & Food Truck | Bay Area</title>
-    <meta name="description" content="Premium gourmet hot dog catering and food truck service in the San Francisco Bay Area. Perfect for corporate events, weddings, and celebrations.">
+    <title>Saul's Hot Dogs & Gourmet Catering | Premier Bay Area Event Catering</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#111827',     /* Slate Charcoal */
+                            canvas: '#FAFAF8',   /* Warm Soft Cream */
+                            amber: '#D97706',    /* Warm Gold Amber */
+                            amberDark: '#B45309',
+                            crimson: '#991B1B',  /* Deep Crimson / Burgundy */
+                            slate: '#334155',
+                            creamCard: '#FFFFFF',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-red: #d32f2f;
-            --dark-red: #b71c1c;
-            --light-gray: #f8f8f8;
-            --dark-gray: #1a1a1a;
-            --text-gray: #333;
-            --accent-gold: #ffd700;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: var(--text-gray);
-            overflow-x: hidden;
-            background: var(--light-gray);
-            line-height: 1.6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAFAF8;
+            color: #111827;
         }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
         }
 
-        nav.scrolled {
-            padding: 0.8rem 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAF8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            cursor: pointer;
-            transition: transform 0.3s;
+        .glass-nav {
+            background: rgba(250, 250, 248, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        .logo-container:hover {
-            transform: scale(1.05);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
         }
 
-        .logo-svg {
-            height: 45px;
-            width: auto;
-        }
-
-        .brand-name {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--dark-gray);
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+        .gradient-text {
+            background: linear-gradient(135deg, #111827 0%, #D97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
+        /* Input Range Styling */
+        input[type=range] {
+            accent-color: #D97706;
         }
 
-        nav a {
-            text-decoration: none;
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
+        /* Pulse Ring for Status */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
         }
-
-        nav a:hover {
-            color: var(--primary-red);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-red);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-red);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                right: 0;
-                background: white;
-                padding: 2rem;
-                gap: 1rem;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .brand-name {
-                font-size: 1.1rem;
-            }
-
-            nav a {
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-            padding-top: 60px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('/images/IMG_4671.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            opacity: 0.7;
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .hero-logo {
-            height: 140px;
-            width: auto;
-            margin-bottom: 2rem;
-            animation: bounce 2s infinite;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            color: var(--dark-gray);
-            letter-spacing: -2px;
-            animation: slideInDown 0.8s ease-out;
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--accent-gold);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            animation: slideInUp 0.8s ease-out 0.1s both;
-            letter-spacing: 2px;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 2.5rem;
-            animation: slideInUp 0.8s ease-out 0.2s both;
-            font-weight: 300;
-            line-height: 1.8;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            animation: slideInUp 0.8s ease-out 0.3s both;
-            flex-wrap: wrap;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--primary-red);
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
-            border: 2px solid var(--primary-red);
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .cta-button:hover {
-            background: var(--dark-red);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.4);
-        }
-
-        .cta-button-secondary {
-            background: transparent;
-            color: var(--primary-red);
-            border: 2px solid var(--primary-red);
-        }
-
-        .cta-button-secondary:hover {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-arrow {
-            width: 24px;
-            height: 24px;
-            border-right: 2px solid var(--primary-red);
-            border-bottom: 2px solid var(--primary-red);
-            transform: rotate(-45deg);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .hero-logo {
-                height: 100px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .cta-button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Menu Section */
-        .menu-section {
-            padding: 5rem 2rem;
-            background: white;
-            position: relative;
-        }
-
-        .menu-section h2 {
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--dark-gray);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .menu-item {
-            background: var(--light-gray);
-            padding: 2rem;
-            border-radius: 12px;
-            transition: all 0.3s;
-            border-left: 4px solid var(--primary-red);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .menu-item:hover::before {
-            left: 100%;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.2);
-        }
-
-        .menu-item h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-red);
-        }
-
-        .menu-item p {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .menu-price {
-            font-weight: 700;
-            color: var(--primary-red);
-            font-size: 1.2rem;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 5rem 2rem;
-            background: var(--light-gray);
-        }
-
-        .services h2 {
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--dark-gray);
-        }
-
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-            border-top: 4px solid var(--primary-red);
-            position: relative;
-        }
-
-        .service-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-red), var(--accent-gold));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
-        }
-
-        .service-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .service-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--primary-red);
-        }
-
-        .service-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 2rem;
-            background: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(211, 47, 47, 0.05), transparent);
-            border-radius: 50%;
-            z-index: 0;
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .about h2 {
-            font-size: 2.8rem;
-            margin-bottom: 2rem;
-            color: var(--dark-gray);
-        }
-
-        .about p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.9;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 2rem;
-            background: var(--light-gray);
-            border-radius: 12px;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--primary-red);
-        }
-
-        .stat-label {
-            color: #666;
-            margin-top: 0.5rem;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 5rem 2rem;
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonials::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 50%;
-        }
-
-        .testimonials h2 {
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: slideInUp 0.6s ease-out;
-        }
-
-        .testimonial-card p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            line-height: 1.8;
-        }
-
-        .testimonial-author {
-            font-weight: 700;
-            color: var(--accent-gold);
-        }
-
-        .testimonial-role {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 0.5rem;
-        }
-
-        .testimonial-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .control-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        .dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .dot.active {
-            background: var(--accent-gold);
-            width: 30px;
-            border-radius: 5px;
-        }
-
-        /* Location Section */
-        .location {
-            padding: 5rem 2rem;
-            background: var(--light-gray);
-        }
-
-        .location-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .location h2 {
-            font-size: 2.8rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            color: var(--dark-gray);
-        }
-
-        .location-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
-        }
-
-        .location-box {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            border-top: 4px solid var(--primary-red);
-        }
-
-        .location-box h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-red);
-        }
-
-        .location-box p {
-            margin-bottom: 0.8rem;
-            color: #666;
-        }
-
-        .hours {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-
-        .hours p {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 5rem 2rem;
-            background: white;
-        }
-
-        .contact h2 {
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--dark-gray);
-        }
-
-        .contact-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark-gray);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-red);
-            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--primary-red);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: var(--dark-red);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-gray);
-            color: white;
-            padding: 3rem 2rem 2rem;
-            text-align: center;
-        }
-
-        footer p {
-            margin-bottom: 0.8rem;
-            opacity: 0.9;
-        }
-
-        footer a {
-            color: var(--accent-gold);
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        footer a:hover {
-            opacity: 0.8;
-        }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: white;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-
-        .footer-link:hover {
-            opacity: 1;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* Utilities */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .menu-grid,
-            .service-grid,
-            .location-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .about h2,
-            .location h2,
-            .contact h2,
-            .menu-section h2,
-            .services h2,
-            .testimonials h2 {
-                font-size: 2rem;
-            }
+        .pulse-dot {
+            animation: pulse-ring 2s infinite ease-in-out;
         }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav>
-        <div class="logo-container" onclick="smoothScroll('#top')">
-            <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="#d32f2f" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="55" y="30" width="90" height="20" rx="4"/>
-                    <path d="M 60 50 Q 65 45 70 50 Q 75 45 80 50 Q 85 45 90 50 Q 95 45 100 50 Q 105 45 110 50 Q 115 45 120 50 Q 125 45 130 50 Q 135 45 140 50"/>
-                    <rect x="50" y="50" width="100" height="60" rx="3"/>
-                    <circle cx="75" cy="115" r="15"/>
-                    <circle cx="75" cy="115" r="8" fill="none"/>
-                    <circle cx="125" cy="115" r="15"/>
-                    <circle cx="125" cy="115" r="8" fill="none"/>
-                    <rect x="60" y="55" width="80" height="12" rx="2"/>
-                    <path d="M 62 67 L 138 67" stroke-dasharray="4,2"/>
-                    <rect x="68" y="60" width="4" height="10" rx="2"/>
-                    <rect x="78" y="60" width="4" height="10" rx="2"/>
-                    <rect x="88" y="60" width="4" height="10" rx="2"/>
-                    <rect x="98" y="60" width="4" height="10" rx="2"/>
-                    <rect x="108" y="60" width="4" height="10" rx="2"/>
-                    <rect x="118" y="60" width="4" height="10" rx="2"/>
-                    <rect x="65" y="70" width="5" height="12" rx="1"/>
-                    <rect x="75" y="70" width="5" height="12" rx="1"/>
-                </g>
-            </svg>
-            <span class="brand-name">Saul's</span>
-        </div>
-        <div class="nav-links" id="navLinks">
-            <a href="#menu">Menu</a>
-            <a href="#services">Services</a>
-            <a href="#testimonials">Testimonials</a>
-            <a href="#location">Location</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
+<body class="antialiased text-brand-dark selection:bg-brand-amber selection:text-white">
 
-    <!-- Hero Section -->
-    <section class="hero" id="top">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <svg class="hero-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="#d32f2f" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="55" y="30" width="90" height="20" rx="4"/>
-                    <path d="M 60 50 Q 65 45 70 50 Q 75 45 80 50 Q 85 45 90 50 Q 95 45 100 50 Q 105 45 110 50 Q 115 45 120 50 Q 125 45 130 50 Q 135 45 140 50"/>
-                    <rect x="50" y="50" width="100" height="60" rx="3"/>
-                    <circle cx="75" cy="115" r="15"/>
-                    <circle cx="75" cy="115" r="8" fill="none"/>
-                    <circle cx="125" cy="115" r="15"/>
-                    <circle cx="125" cy="115" r="8" fill="none"/>
-                    <rect x="60" y="55" width="80" height="12" rx="2"/>
-                    <path d="M 62 67 L 138 67" stroke-dasharray="4,2"/>
-                    <rect x="68" y="60" width="4" height="10" rx="2"/>
-                    <rect x="78" y="60" width="4" height="10" rx="2"/>
-                    <rect x="88" y="60" width="4" height="10" rx="2"/>
-                    <rect x="98" y="60" width="4" height="10" rx="2"/>
-                    <rect x="108" y="60" width="4" height="10" rx="2"/>
-                    <rect x="118" y="60" width="4" height="10" rx="2"/>
-                    <rect x="65" y="70" width="5" height="12" rx="1"/>
-                    <rect x="75" y="70" width="5" height="12" rx="1"/>
-                </g>
-            </svg>
-            <h1>Saul's Hot Dogs</h1>
-            <div class="hero-subtitle">Est. 2019 | Bay Area</div>
-            <p>Gourmet Hot Dogs, Professional Catering & Food Truck Service</p>
-            <div class="cta-buttons">
-                <a href="#contact" class="cta-button">Book Catering</a>
-                <a href="#menu" class="cta-button cta-button-secondary">See Our Menu</a>
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-gray-200/60 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand SVG Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-dark flex items-center justify-center p-2 text-brand-amber transition-transform duration-300 group-hover:scale-105 shadow-md">
+                        <!-- Custom Modern SVG Logo -->
+                        <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Grill flame / sausage abstract geometry -->
+                            <path d="M20 50C20 33.4315 33.4315 20 50 20C66.5685 20 80 33.4315 80 50C80 66.5685 66.5685 80 50 80" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                            <path d="M30 50C30 38.9543 38.9543 30 50 30C61.0457 30 70 38.9543 70 50" stroke="#991B1B" stroke-width="5" stroke-linecap="round"/>
+                            <circle cx="50" cy="50" r="8" fill="currentColor"/>
+                            <path d="M42 68L50 60L58 68" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-serif text-2xl font-bold tracking-tight text-brand-dark group-hover:text-brand-amber transition-colors">SAUL'S</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gray-500 font-medium">Gourmet Hot Dogs & Catering</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#menu" class="text-gray-700 hover:text-brand-amber transition-colors">Menu</a>
+                    <a href="#estimator" class="text-gray-700 hover:text-brand-amber transition-colors">Event Estimator</a>
+                    <a href="#services" class="text-gray-700 hover:text-brand-amber transition-colors">Services</a>
+                    <a href="#testimonials" class="text-gray-700 hover:text-brand-amber transition-colors">Reviews</a>
+                    <a href="#location" class="text-gray-700 hover:text-brand-amber transition-colors">Location</a>
+                </nav>
+
+                <!-- Status Badge & CTA -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <!-- Live Status Indicator -->
+                    <div id="live-status-badge" class="flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span class="relative flex h-2 w-2">
+                          <span class="pulse-dot absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span id="status-text">Open Now • San José</span>
+                    </div>
+
+                    <a href="#estimator" class="bg-brand-dark hover:bg-brand-amber text-white hover:text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md">
+                        Get Quote
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" type="button" class="md:hidden p-2 rounded-lg text-gray-700 hover:text-brand-dark hover:bg-gray-100 focus:outline-none" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="#menu" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-amber">Menu</a>
+            <a href="#estimator" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-amber">Event Estimator</a>
+            <a href="#services" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-amber">Services & Coverage</a>
+            <a href="#testimonials" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-amber">Client Reviews</a>
+            <a href="#location" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-amber">Location & Hours</a>
+            <a href="#booking" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-amber">Book Catering</a>
+            <div class="pt-2 border-t border-gray-100 flex items-center justify-between">
+                <div id="mobile-status-badge" class="text-xs font-semibold text-emerald-700">
+                    🟢 Open Now in San José
+                </div>
+                <a href="#estimator" class="mobile-link bg-brand-amber text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                    Get Event Quote
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+        <!-- Subtle Grid Pattern Background -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#111827_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    
+                    <!-- Badge tag -->
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-100/70 text-brand-amberDark border border-amber-200/80 text-xs font-semibold">
+                        <i class="fa-solid fa-star text-amber-500"></i>
+                        <span>Premier Bay Area Gourmet Catering & Food Truck</span>
+                    </div>
+
+                    <!-- Headline -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-dark leading-[1.15]">
+                        Elevated Street Food.<br>
+                        <span class="italic font-normal text-brand-amber">Unforgettable Events.</span>
+                    </h1>
+
+                    <!-- Description -->
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Crafting artisanal wagyu sausages, organic hot dogs, house-made brioche, and bespoke event catering for Silicon Valley tech galas, Bay Area weddings, and private celebrations.
+                    </p>
+
+                    <!-- CTA Group -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#estimator" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-brand-dark hover:bg-brand-amber text-white font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                            <i class="fa-solid fa-calculator mr-2.5"></i> Calculate Event Quote
+                        </a>
+                        <a href="#menu" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-white hover:bg-gray-100 text-brand-dark border border-gray-300 font-semibold text-base transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-utensils mr-2.5 text-brand-amber"></i> Explore Menu
+                        </a>
+                    </div>
+
+                    <!-- Stat Counters -->
+                    <div class="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-gray-200/80">
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-bold text-brand-dark font-serif">15k+</p>
+                            <p class="text-xs text-gray-500 font-medium">Guests Served</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-bold text-brand-dark font-serif">4.9★</p>
+                            <p class="text-xs text-gray-500 font-medium">500+ Reviews</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-bold text-brand-dark font-serif">350+</p>
+                            <p class="text-xs text-gray-500 font-medium">Tech Corporate Events</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-bold text-brand-dark font-serif">100%</p>
+                            <p class="text-xs text-gray-500 font-medium">Local & Organic</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right Card Graphic -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <!-- Decorative Backdrop Blur shape -->
+                        <div class="absolute -top-6 -left-6 w-72 h-72 bg-amber-200 rounded-full filter blur-3xl opacity-40 -z-10"></div>
+                        <div class="absolute -bottom-6 -right-6 w-72 h-72 bg-red-200 rounded-full filter blur-3xl opacity-30 -z-10"></div>
+
+                        <!-- Main Showcase Card -->
+                        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-gray-100 relative">
+                            <!-- Floating Tag -->
+                            <div class="absolute -top-4 right-6 bg-brand-crimson text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+                                Chef's Signature
+                            </div>
+
+                            <div class="w-full h-56 rounded-2xl bg-gradient-to-tr from-amber-900/10 to-amber-500/20 overflow-hidden relative flex items-center justify-center p-6 border border-amber-100">
+                                <!-- Styled Hot Dog Illustration SVG -->
+                                <svg class="w-48 h-48 text-brand-dark drop-shadow-md" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Bun -->
+                                    <path d="M20 110C20 85 45 70 100 70C155 70 180 85 180 110C180 135 155 145 100 145C45 145 20 135 20 110Z" fill="#F59E0B" opacity="0.85"/>
+                                    <path d="M25 112C25 90 48 78 100 78C152 78 175 90 175 112C175 130 152 138 100 138C48 138 25 130 25 112Z" fill="#FBBF24"/>
+                                    <!-- Sausage -->
+                                    <rect x="15" y="95" width="170" height="26" rx="13" fill="#991B1B"/>
+                                    <!-- Mustard Zigzag -->
+                                    <path d="M35 108 C45 100, 55 116, 65 108 C75 100, 85 116, 95 108 C105 100, 115 116, 125 108 C135 100, 145 116, 155 108 C165 100, 175 116, 180 108" stroke="#FEF08A" stroke-width="5" stroke-linecap="round" fill="none"/>
+                                    <!-- Truffle Crumbles -->
+                                    <circle cx="50" cy="100" r="2" fill="#111827"/>
+                                    <circle cx="90" cy="102" r="2.5" fill="#111827"/>
+                                    <circle cx="130" cy="99" r="2" fill="#111827"/>
+                                    <circle cx="160" cy="101" r="2.5" fill="#111827"/>
+                                </svg>
+                            </div>
+
+                            <div class="mt-6 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-xl font-bold font-serif text-brand-dark">The Silicon Valley Truffle Wagyu</h3>
+                                    <span class="text-lg font-bold text-brand-amber">$16</span>
+                                </div>
+                                <p class="text-sm text-gray-600">
+                                    American Snake River Farms Wagyu beef sausage, black truffle aioli, caramelised shallots, smoked Gruyère, artisanal toasted brioche bun.
+                                </p>
+                                <div class="pt-3 flex flex-wrap gap-2 text-xs font-semibold">
+                                    <span class="px-2.5 py-1 bg-gray-100 text-gray-700 rounded-md">Snake River Wagyu</span>
+                                    <span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md">House Brioche</span>
+                                    <span class="px-2.5 py-1 bg-red-50 text-red-700 rounded-md">Mild Spice 🌶️</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <!-- Menu Section -->
-    <section class="menu-section" id="menu">
-        <div class="container">
-            <h2>Featured Menu Items</h2>
-            <p class="section-subtitle">Gourmet hot dogs crafted with premium ingredients and creative toppings</p>
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <h3>🌭 Classic Chicago Dog</h3>
-                    <p>Premium frank with mustard, relish, onions, tomatoes, pickles and celery salt on a toasted bun</p>
-                    <div class="menu-price">$7.50</div>
-                </div>
-                <div class="menu-item">
-                    <h3>🔥 Spicy Jalapeño</h3>
-                    <p>Grilled frank with crispy jalapeños, pepper jack cheese, chipotle mayo and cilantro</p>
-                    <div class="menu-price">$8.50</div>
-                </div>
-                <div class="menu-item">
-                    <h3>🥓 Loaded Bacon Cheesedog</h3>
-                    <p>Premium frank with crispy bacon, cheddar cheese, grilled onions and our signature sauce</p>
-                    <div class="menu-price">$9.00</div>
-                </div>
-                <div class="menu-item">
-                    <h3>🧅 Caramelized Onion Bliss</h3>
-                    <p>Gourmet frank topped with sweet caramelized onions, brie cheese and fresh thyme</p>
-                    <div class="menu-price">$9.50</div>
-                </div>
-                <div class="menu-item">
-                    <h3>🌶️ Sriracha Heat</h3>
-                    <p>Grilled frank with sriracha mayo, crispy fried onions, sesame seeds and scallions</p>
-                    <div class="menu-price">$8.50</div>
-                </div>
-                <div class="menu-item">
-                    <h3>🧀 The Truffled Luxury</h3>
-                    <p>Premium frank with truffle oil, aged cheddar, caramelized onions and microgreens</p>
-                    <div class="menu-price">$12.00</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about">
-        <div class="about-content">
-            <h2>About Saul's Hot Dogs</h2>
-            <p>Since 2019, Saul's Hot Dogs has been the Bay Area's premier destination for gourmet hot dogs and professional catering. We've built our reputation on quality ingredients, innovative recipes, and exceptional service that brings people together.</p>
-            <p>Whether you're grabbing a quick lunch at our main location in San José or booking us for your next event, every hot dog is crafted with care, passion, and the finest ingredients we can source.</p>
+    <section id="menu" class="py-20 bg-white border-t border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="about-stats">
-                <div class="stat">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Years of Excellence</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Events Catered</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">1000+</div>
-                    <div class="stat-label">Happy Customers</div>
-                </div>
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-xs uppercase tracking-widest text-brand-amber font-bold">Artisanal Selection</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark font-serif">Gourmet Menu & Craft Sausages</h2>
+                <p class="text-gray-600 text-base">
+                    Every dog is crafted with locally sourced artisan meats, house-fermented toppings, and scratch-baked brioche buns.
+                </p>
             </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3" id="menu-filters">
+                <button data-filter="all" class="menu-filter-btn active-filter px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-brand-dark text-white shadow-sm">
+                    All Items
+                </button>
+                <button data-filter="signature" class="menu-filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                    ✨ Chef Signatures
+                </button>
+                <button data-filter="classics" class="menu-filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                    🌭 Elevated Classics
+                </button>
+                <button data-filter="vegan" class="menu-filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                    🌱 Vegan & Vegetarian
+                </button>
+                <button data-filter="sides" class="menu-filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                    🍟 Gourmet Sides & Drinks
+                </button>
+            </div>
+
+            <!-- Menu Cards Grid -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+                <!-- Javascript will inject dynamic menu items here -->
+            </div>
+
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div class="service-grid">
-                <div class="service-card">
-                    <div class="service-icon">🚐</div>
-                    <h3>Food Truck Service</h3>
-                    <p>Mobile catering for festivals, farmers markets, corporate parks and street events across the Bay Area. Fresh, hot, and ready to serve.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎉</div>
-                    <h3>Event Catering</h3>
-                    <p>Full-service catering for weddings, corporate events, birthdays, anniversaries and private celebrations throughout the entire Bay Area.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🏢</div>
-                    <h3>Corporate Lunch Events</h3>
-                    <p>Professional catering solutions for office events, team building exercises, product launches and corporate gatherings with customizable menus.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🏈</div>
-                    <h3>Sports Events</h3>
-                    <p>Perfect for game day tailgates, tournaments, watch parties and sports gatherings. We keep your crowd fed and happy all season long.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🤝</div>
-                    <h3>Community Events</h3>
-                    <p>School fundraisers, block parties, charity events, neighborhood gatherings and community celebrations in the San Francisco Bay Area.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎨</div>
-                    <h3>Custom Menu Design</h3>
-                    <p>Personalized hot dog creations and custom menu planning tailored to your event theme, dietary needs and preferences.</p>
-                </div>
+    <section id="estimator" class="py-20 bg-brand-canvas relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs uppercase tracking-widest text-brand-amber font-bold">Instant Pricing Transparency</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark font-serif">Interactive Catering Estimator</h2>
+                <p class="text-gray-600 text-base">
+                    Calculate real-time estimated quotes for your corporate gala, private party, wedding, or food truck pop-up in seconds.
+                </p>
             </div>
-        </div>
-    </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2>What Our Clients Say</h2>
-            <div class="testimonial-slider">
-                <div class="testimonial-card" id="testimonialCard">
-                    <p id="testimonialText"></p>
-                    <div class="testimonial-author" id="testimonialAuthor"></div>
-                    <div class="testimonial-role" id="testimonialRole"></div>
-                </div>
-                <div class="dots" id="dots"></div>
-                <div class="testimonial-controls">
-                    <button class="control-btn" onclick="previousTestimonial()">❮</button>
-                    <button class="control-btn" onclick="nextTestimonial()">❯</button>
-                </div>
-            </div>
-        </div>
-    </section>
+            <!-- Estimator Tool Container -->
+            <div class="mt-12 bg-white rounded-3xl shadow-xl border border-gray-200/80 p-6 sm:p-10 lg:p-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    
+                    <!-- Form Controls (Left 7 Cols) -->
+                    <div class="lg:col-span-7 space-y-8">
+                        
+                        <!-- Step 1: Event Type -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold uppercase tracking-wider text-gray-700">1. Select Event Style</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <button type="button" data-event-type="corporate" class="event-type-btn active-event p-3 rounded-xl border-2 border-brand-amber bg-amber-50/50 text-brand-dark font-semibold text-xs sm:text-sm text-center flex flex-col items-center gap-2">
+                                    <i class="fa-solid fa-building text-brand-amber text-lg"></i>
+                                    <span>Corporate Event</span>
+                                </button>
+                                <button type="button" data-event-type="wedding" class="event-type-btn p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-amber-300 text-gray-700 font-semibold text-xs sm:text-sm text-center flex flex-col items-center gap-2">
+                                    <i class="fa-solid fa-heart text-rose-500 text-lg"></i>
+                                    <span>Wedding Gala</span>
+                                </button>
+                                <button type="button" data-event-type="party" class="event-type-btn p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-amber-300 text-gray-700 font-semibold text-xs sm:text-sm text-center flex flex-col items-center gap-2">
+                                    <i class="fa-solid fa-glass-cheers text-purple-500 text-lg"></i>
+                                    <span>Private Party</span>
+                                </button>
+                                <button type="button" data-event-type="truck" class="event-type-btn p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-amber-300 text-gray-700 font-semibold text-xs sm:text-sm text-center flex flex-col items-center gap-2">
+                                    <i class="fa-solid fa-truck-front text-emerald-600 text-lg"></i>
+                                    <span>Food Truck</span>
+                                </button>
+                            </div>
+                        </div>
 
-    <!-- Location Section -->
-    <section class="location" id="location">
-        <div class="location-content">
-            <h2>Visit Us</h2>
-            <div class="location-grid">
-                <div class="location-box">
-                    <h3>📍 Main Location</h3>
-                    <p><strong>Saul's Hot Dogs</strong></p>
-                    <p>96 South First Street</p>
-                    <p>San José, CA 95113</p>
-                    <p><strong>Phone:</strong> (408) 555-DOGS</p>
-                    <p><strong>Email:</strong> info@saulshot dogs.com</p>
-                    <div class="hours">
-                        <p><strong>Hours</strong></p>
-                        <p>Friday & Saturday: 11am - 10pm</p>
-                        <p>Sunday: 12pm - 8pm</p>
-                        <p style="font-size: 0.9rem; color: #999; margin-top: 1rem;"><em>Available for catering & events throughout the Bay Area every day of the week</em></p>
+                        <!-- Step 2: Guest Count Slider -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <label class="block text-sm font-bold uppercase tracking-wider text-gray-700">2. Guest Count</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="number" id="guest-count-input" value="75" min="20" max="1000" step="5" class="w-20 px-3 py-1.5 border border-gray-300 rounded-lg text-center font-bold text-brand-dark focus:ring-2 focus:ring-brand-amber focus:outline-none">
+                                    <span class="text-sm text-gray-500 font-medium">Guests</span>
+                                </div>
+                            </div>
+                            <input type="range" id="guest-slider" min="20" max="500" value="75" step="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-xs text-gray-400 font-medium">
+                                <span>20 Intimate</span>
+                                <span>150 Medium</span>
+                                <span>300 Large</span>
+                                <span>500+ Mega</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Catering Tier Selection -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold uppercase tracking-wider text-gray-700">3. Choose Menu Tier</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                
+                                <div data-tier="classic" class="tier-card active-tier border-2 border-brand-amber bg-amber-50/30 rounded-2xl p-4 cursor-pointer transition-all">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-bold font-serif text-brand-dark">Classic Craft</h4>
+                                        <span class="text-xs font-bold text-brand-amber">$18/guest</span>
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-2">2 Signature Dogs, Kettle Chips, House Lemonade.</p>
+                                </div>
+
+                                <div data-tier="artisanal" class="tier-card border-2 border-gray-200 bg-white hover:border-amber-300 rounded-2xl p-4 cursor-pointer transition-all">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-bold font-serif text-brand-dark">Artisanal Gourmet</h4>
+                                        <span class="text-xs font-bold text-brand-amber">$26/guest</span>
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-2">Full Signature & Wagyu Menu, 2 Gourmet Sides, Craft Beverages.</p>
+                                </div>
+
+                                <div data-tier="executive" class="tier-card border-2 border-gray-200 bg-white hover:border-amber-300 rounded-2xl p-4 cursor-pointer transition-all">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-bold font-serif text-brand-dark">Executive Reserve</h4>
+                                        <span class="text-xs font-bold text-brand-amber">$38/guest</span>
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-2">Live Grill Chef Station, Wagyu & Vegan Options, Truffle Sides, Desserts.</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Add-on Enhancements -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold uppercase tracking-wider text-gray-700">4. Optional Package Enhancements</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" id="addon-sides" class="addon-checkbox w-4 h-4 text-brand-amber rounded border-gray-300 focus:ring-brand-amber">
+                                        <span class="text-sm font-medium text-gray-800">Gourmet Side Bar (Truffle Fries & Elote Slaw)</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-600">+$4 / guest</span>
+                                </label>
+
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" id="addon-dessert" class="addon-checkbox w-4 h-4 text-brand-amber rounded border-gray-300 focus:ring-brand-amber">
+                                        <span class="text-sm font-medium text-gray-800">Artisanal Churro & Cookie Dessert Bar</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-600">+$5 / guest</span>
+                                </label>
+
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" id="addon-staff" class="addon-checkbox w-4 h-4 text-brand-amber rounded border-gray-300 focus:ring-brand-amber">
+                                        <span class="text-sm font-medium text-gray-800">Dedicated On-Site Service Staffing & Setup</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-600">+$250 flat</span>
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
+
+                    <!-- Live Quote Summary Box (Right 5 Cols) -->
+                    <div class="lg:col-span-5 flex flex-col justify-between bg-brand-dark text-white rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                        
+                        <!-- Decorative Accent Line -->
+                        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-brand-amber via-yellow-400 to-brand-crimson"></div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold font-serif text-white">Estimated Quote</h3>
+                                    <p class="text-xs text-gray-400" id="summary-event-label">Corporate Event Catering</p>
+                                </div>
+                                <span class="px-3 py-1 bg-amber-500/20 text-brand-amber rounded-full text-xs font-bold border border-amber-500/30">Live Estimate</span>
+                            </div>
+
+                            <!-- Cost Breakdown -->
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between text-gray-300">
+                                    <span>Base Rate (<span id="calc-guests-count">75</span> guests @ <span id="calc-per-guest">$18</span>/ea)</span>
+                                    <span class="font-semibold text-white" id="calc-base-subtotal">$1,350</span>
+                                </div>
+                                <div class="flex justify-between text-gray-300" id="calc-addons-row">
+                                    <span>Add-ons & Upgrades</span>
+                                    <span class="font-semibold text-white" id="calc-addons-total">$0</span>
+                                </div>
+                                <div class="flex justify-between text-gray-400 text-xs">
+                                    <span>Estimated Service Fee & Tax (~15%)</span>
+                                    <span id="calc-tax-fee">$202</span>
+                                </div>
+                            </div>
+
+                            <hr class="border-gray-800">
+
+                            <!-- Grand Total Display -->
+                            <div class="space-y-1">
+                                <div class="flex items-baseline justify-between">
+                                    <span class="text-gray-300 font-medium">Estimated Total:</span>
+                                    <span class="text-3xl sm:text-4xl font-extrabold text-brand-amber font-serif" id="calc-grand-total">$1,552</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400">Final quote locked in upon formal booking confirmation.</p>
+                            </div>
+
+                            <div class="bg-gray-800/80 p-4 rounded-xl border border-gray-700/60 space-y-2">
+                                <div class="flex items-center space-x-2 text-xs text-emerald-400 font-semibold">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Includes Setup, Compostable Utensils & Condiments</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-xs text-gray-300">
+                                    <i class="fa-solid fa-truck text-brand-amber"></i>
+                                    <span>Free delivery within 25 miles of Downtown San José</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-6 mt-6 border-t border-gray-800">
+                            <button id="book-package-btn" type="button" class="w-full bg-brand-amber hover:bg-amber-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-base">
+                                <span>Book This Package</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
                 </div>
-                <div class="location-box">
-                    <h3>📅 Catering & Events</h3>
-                    <p><strong>Service Area:</strong> All of San Francisco Bay Area</p>
-                    <p>We proudly serve:</p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li>✓ San José & Santa Clara County</li>
-                        <li>✓ San Francisco & Bay Area Tech Hubs</li>
-                        <li>✓ East Bay (Oakland, Berkeley)</li>
-                        <li>✓ Peninsula (Palo Alto, Mountain View)</li>
-                        <li>✓ South Bay Communities</li>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs uppercase tracking-widest text-brand-amber font-bold">Tailored Offerings</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark font-serif">Services & Bay Area Coverage</h2>
+                <p class="text-gray-600 text-base">
+                    From gourmet food truck activations on Silicon Valley tech campuses to elegant plated wedding cocktail hours.
+                </p>
+            </div>
+
+            <!-- Service Cards Grid -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="bg-brand-canvas p-6 rounded-2xl border border-gray-200/80 hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-brand-amber flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-truck-monster"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-brand-dark">Gourmet Food Truck</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Our sleek modern food truck brings live high-volume grilling right to your venue or office park.
+                    </p>
+                    <ul class="text-xs text-gray-600 space-y-1.5 pt-2">
+                        <li>• Capacity: 50 - 800+ guests</li>
+                        <li>• Rapid 45-sec service speed</li>
+                        <li>• On-site live grill setup</li>
                     </ul>
-                    <p style="margin-top: 1.5rem;"><strong>Custom Quote?</strong> Contact us for personalized catering packages and availability.</p>
+                </div>
+
+                <div class="bg-brand-canvas p-6 rounded-2xl border border-gray-200/80 hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-100 text-brand-crimson flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-brand-dark">Corporate Lunches</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Individually boxed luxury hot dog meals or hot buffet stations for company milestones and client meetings.
+                    </p>
+                    <ul class="text-xs text-gray-600 space-y-1.5 pt-2">
+                        <li>• Eco-friendly hot packaging</li>
+                        <li>• Full dietary options (GF/Veg)</li>
+                        <li>• Direct corporate invoicing</li>
+                    </ul>
+                </div>
+
+                <div class="bg-brand-canvas p-6 rounded-2xl border border-gray-200/80 hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-champagne-glasses"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-brand-dark">Weddings & Galas</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Late-night snack stations or elevated rehearsal dinner menus that leave a memorable impression on every guest.
+                    </p>
+                    <ul class="text-xs text-gray-600 space-y-1.5 pt-2">
+                        <li>• Custom branded wrappers</li>
+                        <li>• Full staff service available</li>
+                        <li>• Pairings & mocktail bars</li>
+                    </ul>
+                </div>
+
+                <div class="bg-brand-canvas p-6 rounded-2xl border border-gray-200/80 hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-brand-dark">Private Parties</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Birthdays, block parties, and backyard celebrations equipped with our compact artisanal pop-up grill carts.
+                    </p>
+                    <ul class="text-xs text-gray-600 space-y-1.5 pt-2">
+                        <li>• Fits backyard patios</li>
+                        <li>• Customizable menu boards</li>
+                        <li>• Zero-fuss cleanup</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Regional Coverage Pills -->
+            <div class="mt-12 bg-gray-50 rounded-2xl p-6 sm:p-8 border border-gray-200/60">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-1 text-center md:text-left">
+                        <h4 class="font-serif font-bold text-lg text-brand-dark">Serving All Bay Area Regions</h4>
+                        <p class="text-xs text-gray-500">Based in San José with full mobile catering logistics across Northern California.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-2">
+                        <span class="px-3 py-1.5 bg-white text-gray-800 border border-gray-200 rounded-lg text-xs font-semibold shadow-2xs">📍 San José & South Bay</span>
+                        <span class="px-3 py-1.5 bg-white text-gray-800 border border-gray-200 rounded-lg text-xs font-semibold shadow-2xs">📍 San Francisco & SOMA</span>
+                        <span class="px-3 py-1.5 bg-white text-gray-800 border border-gray-200 rounded-lg text-xs font-semibold shadow-2xs">📍 Palo Alto & Silicon Valley</span>
+                        <span class="px-3 py-1.5 bg-white text-gray-800 border border-gray-200 rounded-lg text-xs font-semibold shadow-2xs">📍 East Bay & Oakland</span>
+                        <span class="px-3 py-1.5 bg-white text-gray-800 border border-gray-200 rounded-lg text-xs font-semibold shadow-2xs">📍 Marin & Peninsula</span>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>Book Your Event</h2>
-            <p class="section-subtitle">Let's make your event unforgettable with gourmet hot dogs</p>
-            <div class="contact-container">
-                <form onsubmit="handleSubmit(event)">
-                    <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required>
+    <section id="testimonials" class="py-20 bg-brand-dark text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs uppercase tracking-widest text-brand-amber font-bold">Client Praise</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Trusted by Top Bay Area Hosts</h2>
+                <p class="text-gray-400 text-base">Read why corporate event managers and private hosts choose Saul's time and again.</p>
+            </div>
+
+            <!-- Testimonials Slider Container -->
+            <div class="mt-12 relative max-w-4xl mx-auto">
+                <div id="testimonial-container" class="overflow-hidden">
+                    <div id="testimonial-track" class="flex transition-transform duration-500 ease-in-out">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="bg-gray-800/90 border border-gray-700/80 p-8 rounded-3xl space-y-6 text-center md:text-left md:flex md:items-center md:space-x-8 md:space-y-0">
+                                <div class="w-20 h-20 rounded-full bg-amber-500/20 text-brand-amber font-bold text-2xl flex items-center justify-center border-2 border-brand-amber flex-shrink-0 mx-auto md:mx-0">
+                                    MS
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex justify-center md:justify-start text-amber-400 text-sm">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <p class="text-gray-200 italic text-base sm:text-lg">
+                                        "Saul's catered our 300-person tech product launch in Mountain View. The Wagyu Truffle dog was an absolute showstopper! Smooth logistics and effortless booking."
+                                    </p>
+                                    <div>
+                                        <p class="font-bold text-white font-serif">Marcus Sterling</p>
+                                        <p class="text-xs text-amber-400">Director of Corporate Events • Silicon Valley Tech Firm</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="bg-gray-800/90 border border-gray-700/80 p-8 rounded-3xl space-y-6 text-center md:text-left md:flex md:items-center md:space-x-8 md:space-y-0">
+                                <div class="w-20 h-20 rounded-full bg-red-500/20 text-rose-400 font-bold text-2xl flex items-center justify-center border-2 border-rose-400 flex-shrink-0 mx-auto md:mx-0">
+                                    EL
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex justify-center md:justify-start text-amber-400 text-sm">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <p class="text-gray-200 italic text-base sm:text-lg">
+                                        "We booked the food truck as a late-night snack for our Napa wedding. Our guests are still raving about the Elote Caliente dogs two months later!"
+                                    </p>
+                                    <div>
+                                        <p class="font-bold text-white font-serif">Elena & Liam Vance</p>
+                                        <p class="text-xs text-amber-400">Wedding Hosts • St. Helena, CA</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="bg-gray-800/90 border border-gray-700/80 p-8 rounded-3xl space-y-6 text-center md:text-left md:flex md:items-center md:space-x-8 md:space-y-0">
+                                <div class="w-20 h-20 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-2xl flex items-center justify-center border-2 border-emerald-400 flex-shrink-0 mx-auto md:mx-0">
+                                    DK
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex justify-center md:justify-start text-amber-400 text-sm">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <p class="text-gray-200 italic text-base sm:text-lg">
+                                        "The vegan beyond hot dogs were just as incredible as the meat options. Incredible attention to detail, clean presentation, and super polite staff."
+                                    </p>
+                                    <div>
+                                        <p class="font-bold text-white font-serif">Devon Kroll</p>
+                                        <p class="text-xs text-amber-400">Private Birthday Host • San Francisco</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
+                </div>
+
+                <!-- Carousel Controls -->
+                <div class="flex items-center justify-center space-x-4 mt-8">
+                    <button id="prev-testimonial" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-brand-amber text-white border border-gray-700 flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div id="carousel-dots" class="flex space-x-2">
+                        <!-- Dots rendered by JS -->
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" required>
+                    <button id="next-testimonial" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-brand-amber text-white border border-gray-700 flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="location" class="py-20 bg-brand-canvas">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Info Column (Left 6) -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-xs uppercase tracking-widest text-brand-amber font-bold">Downtown Flagship</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-serif text-brand-dark">Visit Our Kitchen & Kitchen HQ</h2>
+                    <p class="text-gray-600 text-base leading-relaxed">
+                        Located in the heart of Downtown San José. Drop in for lunch, schedule a private catering menu tasting, or consult with our event coordinators.
+                    </p>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-amber-100 text-brand-amber flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-sm">Location Address</h4>
+                                <p class="text-gray-600 text-sm">96 South First Street, San José, CA 95113</p>
+                                <a href="https://maps.google.com/?q=96+South+First+Street,+San+Jose,+CA+95113" target="_blank" class="text-xs text-brand-amber font-semibold hover:underline mt-1 inline-block">
+                                    Open in Google Maps →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-sm">Phone & Hotline</h4>
+                                <p class="text-gray-600 text-sm">(408) 555-DOGS / (408) 555-3647</p>
+                                <p class="text-xs text-gray-500">Catering Line Open Daily 8:00 AM – 7:00 PM PST</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="eventDate">Event Date *</label>
-                        <input type="date" id="eventDate" name="eventDate" required>
+
+                    <!-- Interactive Operating Hours Table -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-3">
+                        <h4 class="font-bold text-brand-dark font-serif text-base border-b border-gray-100 pb-2">Kitchen Operating Hours</h4>
+                        <div class="space-y-2 text-xs sm:text-sm" id="hours-table">
+                            <div class="flex justify-between py-1" data-day="1">
+                                <span class="text-gray-600 font-medium">Monday</span>
+                                <span class="text-gray-800 font-bold">11:30 AM – 8:00 PM</span>
+                            </div>
+                            <div class="flex justify-between py-1" data-day="2">
+                                <span class="text-gray-600 font-medium">Tuesday</span>
+                                <span class="text-gray-800 font-bold">11:30 AM – 8:00 PM</span>
+                            </div>
+                            <div class="flex justify-between py-1" data-day="3">
+                                <span class="text-gray-600 font-medium">Wednesday</span>
+                                <span class="text-gray-800 font-bold">11:30 AM – 9:00 PM</span>
+                            </div>
+                            <div class="flex justify-between py-1" data-day="4">
+                                <span class="text-gray-600 font-medium">Thursday</span>
+                                <span class="text-gray-800 font-bold">11:30 AM – 9:00 PM</span>
+                            </div>
+                            <div class="flex justify-between py-1" data-day="5">
+                                <span class="text-gray-600 font-medium">Friday</span>
+                                <span class="text-gray-800 font-bold">11:30 AM – 10:30 PM</span>
+                            </div>
+                            <div class="flex justify-between py-1" data-day="6">
+                                <span class="text-gray-600 font-medium">Saturday</span>
+                                <span class="text-gray-800 font-bold">11:30 AM – 10:30 PM</span>
+                            </div>
+                            <div class="flex justify-between py-1" data-day="0">
+                                <span class="text-gray-600 font-medium">Sunday</span>
+                                <span class="text-gray-800 font-bold">12:00 PM – 8:00 PM</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="eventType">Event Type *</label>
-                        <input type="text" id="eventType" name="eventType" placeholder="e.g., Corporate Event, Wedding, Birthday" required>
+
+                </div>
+
+                <!-- Custom Visual Map Card (Right 6) -->
+                <div class="lg:col-span-6">
+                    <div class="bg-white p-4 rounded-3xl border border-gray-200/80 shadow-lg relative overflow-hidden">
+                        <div class="w-full h-96 rounded-2xl bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                            <!-- Stylized Map Pattern Graphic -->
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#1E293B_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                            
+                            <!-- Road Network Graphic SVG -->
+                            <svg class="absolute inset-0 w-full h-full text-slate-300" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 100 H400 M0 220 H400 M0 340 H400" stroke="currentColor" stroke-width="12"/>
+                                <path d="M120 0 V400 M260 0 V400" stroke="currentColor" stroke-width="16"/>
+                                <path d="M50 0 L350 400" stroke="#E2E8F0" stroke-width="8"/>
+                            </svg>
+
+                            <!-- Location Marker Pulse Pin -->
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full bg-brand-dark/90 border-4 border-white shadow-2xl flex items-center justify-center text-brand-amber animate-bounce">
+                                    <i class="fa-solid fa-hotdog text-2xl"></i>
+                                </div>
+                                <div class="mt-3 bg-brand-dark text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl border border-amber-500/30 text-center">
+                                    <p class="font-serif">Saul's Flagship</p>
+                                    <p class="text-[10px] text-amber-400">96 S First St, San José</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="guests">Expected Guests *</label>
-                        <input type="number" id="guests" name="guests" min="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Tell Us About Your Event *</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Get a Quote</button>
-                </form>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p><strong>Saul's Hot Dogs</strong></p>
-        <p>Gourmet Hot Dogs & Professional Catering | Serving the San Francisco Bay Area</p>
-        <div class="footer-bottom">
-            <div>
-                <p>📍 96 South First Street, San José, CA 95113</p>
-                <p>📞 (925) 984-7186 | 📧 info@saulshot dogs.com</p>
+    <section id="booking" class="py-20 bg-white border-t border-gray-200/80">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-xs uppercase tracking-widest text-brand-amber font-bold">Reserve Your Date</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-brand-dark">Catering Booking Inquiry</h2>
+                <p class="text-gray-600 text-base">Fill out your event details below to request date availability and lock in your custom menu quote.</p>
+            </div>
+
+            <!-- Interactive Form Card -->
+            <form id="catering-booking-form" class="bg-brand-canvas p-6 sm:p-10 rounded-3xl border border-gray-200/80 shadow-md space-y-6">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Full Name *</label>
+                        <input type="text" id="form-name" required placeholder="e.g. Sarah Jenkins" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Email Address *</label>
+                        <input type="email" id="form-email" required placeholder="sarah@company.com" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Phone Number *</label>
+                        <input type="tel" id="form-phone" required placeholder="(408) 000-0000" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Event Date *</label>
+                        <input type="date" id="form-date" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Estimated Guests *</label>
+                        <input type="number" id="form-guests" required min="10" placeholder="75" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Event Location / Zip Code *</label>
+                        <input type="text" id="form-location" required placeholder="e.g. Mountain View, CA 94043" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Package / Tier Selected</label>
+                        <select id="form-tier" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm">
+                            <option value="Classic Craft ($18/guest)">Classic Craft ($18/guest)</option>
+                            <option value="Artisanal Gourmet ($26/guest)">Artisanal Gourmet ($26/guest)</option>
+                            <option value="Executive Reserve ($38/guest)">Executive Reserve ($38/guest)</option>
+                            <option value="Custom Menu Request">Custom Menu Request</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-700 mb-2">Dietary Notes & Special Requests</label>
+                    <textarea id="form-notes" rows="4" placeholder="Tell us about dietary restrictions (Vegan, Gluten-Free, Halal) or specific timeline details..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-amber focus:border-brand-amber focus:outline-none bg-white text-sm"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-brand-dark hover:bg-brand-amber text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-base">
+                    Submit Catering Inquiry Request
+                </button>
+
+            </form>
+
+        </div>
+    </section>
+
+    <footer class="bg-brand-dark text-white pt-16 pb-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-gray-800">
+                
+                <!-- Brand Info (5 cols) -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-brand-amber text-white flex items-center justify-center p-2">
+                            <i class="fa-solid fa-hotdog text-xl"></i>
+                        </div>
+                        <span class="font-serif text-2xl font-bold tracking-tight text-white">SAUL'S</span>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm leading-relaxed">
+                        Elevated artisanal hot dogs and gourmet catering for corporate galas, Bay Area weddings, and private celebrations.
+                    </p>
+                    <div class="flex space-x-4 text-gray-400 text-lg">
+                        <a href="#" class="hover:text-brand-amber transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="hover:text-brand-amber transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="hover:text-brand-amber transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-brand-amber transition-colors"><i class="fa-brands fa-yelp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links (3 cols) -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#menu" class="hover:text-white transition-colors">Artisanal Menu</a></li>
+                        <li><a href="#estimator" class="hover:text-white transition-colors">Event Quote Estimator</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services & Food Truck</a></li>
+                        <li><a href="#location" class="hover:text-white transition-colors">Location & Hours</a></li>
+                        <li><a href="#booking" class="hover:text-white transition-colors">Book Catering</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info (4 cols) -->
+                <div class="md:col-span-4 space-y-3">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400">Direct Contact</h4>
+                    <p class="text-sm text-gray-400">📍 96 South First Street, San José, CA 95113</p>
+                    <p class="text-sm text-gray-400">📞 (408) 555-DOGS / (408) 555-3647</p>
+                    <p class="text-sm text-gray-400">✉️ catering@saulsgourmet.com</p>
+                    
+                    <!-- Newsletter box -->
+                    <div class="pt-2">
+                        <p class="text-xs text-gray-400 mb-2">Subscribe for pop-up schedules & seasonal menus:</p>
+                        <form id="newsletter-form" class="flex">
+                            <input type="email" required placeholder="Enter email" class="px-3 py-2 bg-gray-800 text-white text-xs rounded-l-lg border border-gray-700 focus:outline-none w-full">
+                            <button type="submit" class="bg-brand-amber hover:bg-amber-600 text-white px-4 py-2 rounded-r-lg text-xs font-bold transition-colors">
+                                Join
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright & Back to Top -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+                <p>© 2026 Saul's Hot Dogs & Gourmet Catering. All rights reserved. San José, CA.</p>
+                <button id="back-to-top" class="hover:text-brand-amber flex items-center space-x-1 font-semibold transition-colors">
+                    <span>Back to top</span>
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
             </div>
         </div>
-        <p style="margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 2rem; opacity: 0.8;">&copy; 2026 Saul's Hot Dogs. All rights reserved. | <a href="#top" class="footer-link">Back to Top</a></p>
     </footer>
 
+    <div id="item-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl relative border border-gray-100">
+            <button id="close-modal-btn" class="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="space-y-2">
+                <div class="flex items-center space-x-2">
+                    <span id="modal-category" class="text-xs font-bold uppercase tracking-wider text-brand-amber bg-amber-50 px-2.5 py-1 rounded-md">Category</span>
+                    <span id="modal-spice" class="text-xs text-red-600 font-semibold"></span>
+                </div>
+                <h3 id="modal-title" class="text-2xl font-bold font-serif text-brand-dark">Item Title</h3>
+                <p id="modal-price" class="text-xl font-bold text-brand-amber">$0.00</p>
+            </div>
+
+            <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed">
+                Detailed description goes here.
+            </p>
+
+            <div class="space-y-3 pt-2 border-t border-gray-100">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-gray-700">Artisanal Topping Customizer</h4>
+                <div class="space-y-2 text-xs" id="modal-toppings-list">
+                    <!-- Dynamic check options -->
+                </div>
+            </div>
+
+            <div class="pt-4 flex items-center justify-between border-t border-gray-100">
+                <span class="text-xs text-gray-500">Available for Food Truck & Plated Catering</span>
+                <button id="modal-confirm-btn" class="bg-brand-dark hover:bg-brand-amber text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-colors">
+                    Add to Inquiry Note
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmation-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl text-center border border-gray-100">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            
+            <div class="space-y-2">
+                <h3 class="text-2xl font-bold font-serif text-brand-dark">Inquiry Received!</h3>
+                <p class="text-xs text-gray-500">Confirmation Code: <span id="conf-code" class="font-mono font-bold text-brand-amber">#SL-8921</span></p>
+            </div>
+
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Thank you for reaching out to Saul's Catering. Our event director will review your guest count and date requirements and contact you within <strong class="text-brand-dark">2 business hours</strong>.
+            </p>
+
+            <div id="conf-recap" class="bg-gray-50 p-4 rounded-xl text-xs text-left space-y-1 border border-gray-200/80">
+                <!-- Injected summary -->
+            </div>
+
+            <button id="close-conf-btn" class="w-full bg-brand-dark hover:bg-brand-amber text-white font-bold py-3 rounded-xl text-sm transition-colors">
+                Done
+            </button>
+        </div>
+    </div>
+
     <script>
-        // Testimonials data
-        const testimonials = [
+        // Menu Items Data Array
+        const menuData = [
             {
-                text: "Saul's catered our company's annual  conference and it was a huge hit! The hot dogs were delicious, the service was impeccable, and our guests couldn't stop talking about it. Highly recommended!",
-                author: "Samuel H.",
-                role: "Event Manager"
+                id: 'wagyu-truffle',
+                title: 'The Silicon Valley Truffle Wagyu',
+                category: 'signature',
+                price: 16,
+                spice: '🌶️ Mild',
+                tags: ['Snake River Wagyu', 'House Brioche'],
+                description: 'American Snake River Farms Wagyu beef sausage, black truffle garlic aioli, caramelized shallots, smoked Gruyère cheese on toasted artisan brioche.',
+                toppings: ['Extra Truffle Aioli', 'Pickled Jalapeños', 'Crispy Shallots', 'Smoked Gruyère']
             },
             {
-                text: "We booked Saul's for our graduation reception and it was absolutely perfect. The customized menu was creative, the presentation was beautiful, and every guest loved their meal. A memorable experience!",
-                author: "Brenda W.",
-                role: "Customer"
+                id: 'elote-caliente',
+                title: 'Elote Caliente Street Dog',
+                category: 'signature',
+                price: 14,
+                spice: '🌶️🌶️ Medium Hot',
+                tags: ['Smoked Pork', 'Cotija Cheese'],
+                description: 'Hickory-smoked pork sausage topped with charred street corn, cotija cheese, tajín crema, cilantro, and crushed takis crumble.',
+                toppings: ['Tajín Crema', 'Extra Cotija', 'Jalapeño Slices', 'Charred Corn']
             },
             {
-                text: "Having Saul's catering at our events has been a game-changer. The quality is outstanding, the line never stops, and the team is professional and friendly. Best partnership ever!",
-                author: "Kenneth A.",
-                role: "Manager"
+                id: 'mission-bacon',
+                title: 'Mission District Bacon Wrapped',
+                category: 'classics',
+                price: 15,
+                spice: '🌶️ Mild',
+                tags: ['Thick Cut Bacon', 'Grilled Peppers'],
+                description: 'Classic SF style: All-beef frank wrapped in thick-cut Nueske bacon, seared peppers & onions, mayo, mustard, and grilled jalapeño.',
+                toppings: ['Grilled Peppers', 'Chipotle Mayo', 'Grilled Jalapeño', 'Pico de Gallo']
             },
             {
-                text: "For our nonprofit's fundraiser, Saul's provided amazing catering at a fair price. They were flexible with our needs, delivered on time, and actually contributed to our cause. Incredible company!",
-                author: "David Park",
-                role: "Executive Director"
+                id: 'beyond-botanical',
+                title: 'Beyond Organic Botanical',
+                category: 'vegan',
+                price: 15,
+                spice: '🌿 Vegan',
+                tags: ['100% Plant-Based', 'Vegan Brioche'],
+                description: 'Artisanal plant-based bratwurst, vegan garlic aioli, sauerkraut, avocado mash, and microgreens on toasted vegan brioche.',
+                toppings: ['Vegan Garlic Aioli', 'Avocado Mash', 'House Sauerkraut', 'Microgreens']
+            },
+            {
+                id: 'chicago-classic',
+                title: 'Windy City Heirloom Classic',
+                category: 'classics',
+                price: 13,
+                spice: 'Mild',
+                tags: ['All-Beef Frank', 'Poppyseed Bun'],
+                description: 'All-beef kosher frank on a steamed poppyseed bun with yellow mustard, neon green relish, chopped onions, tomato wedges, pickle spear, sport peppers, and celery salt.',
+                toppings: ['Sport Peppers', 'Pickle Spear', 'Celery Salt', 'Diced Onions']
+            },
+            {
+                id: 'truffle-fries',
+                title: 'Parmesan Truffle Fries',
+                category: 'sides',
+                price: 8,
+                spice: 'Gourmet Side',
+                tags: ['Hand-Cut', 'Black Truffle'],
+                description: 'Crispy double-cooked hand-cut fries tossed with black truffle oil, aged Parmigiano-Reggiano, and fresh parsley.',
+                toppings: ['Extra Truffle Oil', 'Shaved Parmesan', 'Garlic Dip']
+            },
+            {
+                id: 'churro-bites',
+                title: 'Cinnamon Sugar Churro Bites',
+                category: 'sides',
+                price: 7,
+                spice: 'Dessert',
+                tags: ['Warm & Fresh', 'Dulce de Leche'],
+                description: 'Crispy fried churro bites dusted in Mexican cinnamon sugar, served with warm dulce de leche dipping sauce.',
+                toppings: ['Extra Dulce de Leche', 'Chocolate Drizzle']
+            },
+            {
+                id: 'craft-lemonade',
+                title: 'Blood Orange Mint Lemonade',
+                category: 'sides',
+                price: 5,
+                spice: 'Beverage',
+                tags: ['House Made', 'Refresher'],
+                description: 'Hand-pressed lemon juice blended with Sicilian blood orange puree and fresh slapped garden mint.',
+                toppings: ['Extra Mint', 'Less Sweet']
             }
         ];
 
-        let currentTestimonial = 0;
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
 
-        function displayTestimonial(index) {
-            const testimonial = testimonials[index];
-            document.getElementById('testimonialText').textContent = '"' + testimonial.text + '"';
-            document.getElementById('testimonialAuthor').textContent = testimonial.author;
-            document.getElementById('testimonialRole').textContent = testimonial.role;
-            updateDots();
-        }
-
-        function nextTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            displayTestimonial(currentTestimonial);
-        }
-
-        function previousTestimonial() {
-            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-            displayTestimonial(currentTestimonial);
-        }
-
-        function updateDots() {
-            const dotsContainer = document.getElementById('dots');
-            dotsContainer.innerHTML = '';
-            testimonials.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (index === currentTestimonial ? ' active' : '');
-                dot.onclick = () => {
-                    currentTestimonial = index;
-                    displayTestimonial(currentTestimonial);
-                };
-                dotsContainer.appendChild(dot);
-            });
-        }
-
-        // Initialize testimonials
-        displayTestimonial(0);
-
-        // Auto-rotate testimonials every 8 seconds
-        setInterval(nextTestimonial, 8000);
-
-        // Mobile hamburger menu
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when a link is clicked
-        document.querySelectorAll('#navLinks a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Smooth scroll functionality
-        function smoothScroll(target) {
-            const element = document.querySelector(target);
-            if (element) {
-                element.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        menuIcon.className = 'fa-solid fa-bars text-xl';
+                    } else {
+                        menuIcon.className = 'fa-solid fa-xmark text-xl';
+                    }
                 });
             }
-        }
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                smoothScroll(this.getAttribute('href'));
+            // Close mobile menu on link click
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.className = 'fa-solid fa-bars text-xl';
+                });
             });
-        });
 
-        // Scroll effect for nav bar
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.pageYOffset > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+            // 2. Render Menu Cards & Category Filtering
+            const menuGrid = document.getElementById('menu-grid');
+            
+            function renderMenu(items) {
+                if (!menuGrid) return;
+                menuGrid.innerHTML = '';
+                
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group';
+                    
+                    card.innerHTML = `
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold px-2.5 py-1 bg-amber-50 text-brand-amber rounded-md">${item.spice}</span>
+                                <span class="text-xl font-bold font-serif text-brand-dark">$${item.price}</span>
+                            </div>
+                            <h3 class="text-lg font-bold font-serif text-brand-dark group-hover:text-brand-amber transition-colors">${item.title}</h3>
+                            <p class="text-xs text-gray-600 leading-relaxed">${item.description}</p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                ${item.tags.map(t => `<span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-semibold rounded">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="pt-6 mt-4 border-t border-gray-100">
+                            <button onclick="openCustomizerModal('${item.id}')" class="w-full py-2.5 px-4 rounded-xl border border-gray-300 hover:border-brand-amber text-brand-dark hover:text-brand-amber text-xs font-bold transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-sliders"></i>
+                                <span>Customize & Quick View</span>
+                            </button>
+                        </div>
+                    `;
+                    menuGrid.appendChild(card);
+                });
             }
-        });
 
-        // Fade in cards on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            renderMenu(menuData);
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                    observer.unobserve(entry.target);
-                }
+            // Menu Filter Buttons Event
+            const filterBtns = document.querySelectorAll('.menu-filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-brand-dark', 'text-white', 'shadow-sm');
+                        b.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    btn.classList.remove('bg-gray-100', 'text-gray-700');
+                    btn.classList.add('bg-brand-dark', 'text-white', 'shadow-sm');
+
+                    const category = btn.getAttribute('data-filter');
+                    if (category === 'all') {
+                        renderMenu(menuData);
+                    } else {
+                        const filtered = menuData.filter(i => i.category === category);
+                        renderMenu(filtered);
+                    }
+                });
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.menu-item, .service-card, .location-box').forEach(el => {
-            observer.observe(el);
+            const guestSlider = document.getElementById('guest-slider');
+            const guestInput = document.getElementById('guest-count-input');
+            const eventBtns = document.querySelectorAll('.event-type-btn');
+            const tierCards = document.querySelectorAll('.tier-card');
+            const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+
+            let currentGuests = 75;
+            let currentTierRate = 18; // Classic Craft default
+            let currentEventLabel = 'Corporate Event Catering';
+
+            function updateCalculator() {
+                // Sync Slider & Input
+                if (guestSlider && guestInput) {
+                    currentGuests = parseInt(guestInput.value) || 20;
+                }
+
+                // Addons calculation
+                let addonsPerGuest = 0;
+                let flatAddons = 0;
+
+                if (document.getElementById('addon-sides')?.checked) addonsPerGuest += 4;
+                if (document.getElementById('addon-dessert')?.checked) addonsPerGuest += 5;
+                if (document.getElementById('addon-staff')?.checked) flatAddons += 250;
+
+                const baseSubtotal = currentGuests * currentTierRate;
+                const addonsSubtotal = (currentGuests * addonsPerGuest) + flatAddons;
+                const subtotal = baseSubtotal + addonsSubtotal;
+                const taxAndFees = Math.round(subtotal * 0.15);
+                const grandTotal = subtotal + taxAndFees;
+
+                // Update DOM
+                document.getElementById('calc-guests-count').textContent = currentGuests;
+                document.getElementById('calc-per-guest').textContent = `$${currentTierRate}`;
+                document.getElementById('calc-base-subtotal').textContent = `$${baseSubtotal.toLocaleString()}`;
+                document.getElementById('calc-addons-total').textContent = `$${addonsSubtotal.toLocaleString()}`;
+                document.getElementById('calc-tax-fee').textContent = `$${taxAndFees.toLocaleString()}`;
+                document.getElementById('calc-grand-total').textContent = `$${grandTotal.toLocaleString()}`;
+                document.getElementById('summary-event-label').textContent = currentEventLabel;
+
+                // Sync with Booking Form default guest count
+                const formGuests = document.getElementById('form-guests');
+                if (formGuests) formGuests.value = currentGuests;
+            }
+
+            if (guestSlider && guestInput) {
+                guestSlider.addEventListener('input', (e) => {
+                    guestInput.value = e.target.value;
+                    updateCalculator();
+                });
+                guestInput.addEventListener('input', (e) => {
+                    guestSlider.value = e.target.value;
+                    updateCalculator();
+                });
+            }
+
+            // Event Style selection
+            eventBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    eventBtns.forEach(b => {
+                        b.classList.remove('border-brand-amber', 'bg-amber-50/50');
+                        b.classList.add('border-gray-200', 'bg-white');
+                    });
+                    btn.classList.remove('border-gray-200', 'bg-white');
+                    btn.classList.add('border-brand-amber', 'bg-amber-50/50');
+
+                    const type = btn.getAttribute('data-event-type');
+                    if (type === 'corporate') currentEventLabel = 'Corporate Luncheon Catering';
+                    if (type === 'wedding') currentEventLabel = 'Wedding Gala Catering';
+                    if (type === 'party') currentEventLabel = 'Private Party Catering';
+                    if (type === 'truck') currentEventLabel = 'Food Truck Pop-Up Activation';
+                    updateCalculator();
+                });
+            });
+
+            // Tier selection
+            tierCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    tierCards.forEach(c => {
+                        c.classList.remove('border-brand-amber', 'bg-amber-50/30');
+                        c.classList.add('border-gray-200', 'bg-white');
+                    });
+                    card.classList.remove('border-gray-200', 'bg-white');
+                    card.classList.add('border-brand-amber', 'bg-amber-50/30');
+
+                    const tier = card.getAttribute('data-tier');
+                    if (tier === 'classic') currentTierRate = 18;
+                    if (tier === 'artisanal') currentTierRate = 26;
+                    if (tier === 'executive') currentTierRate = 38;
+                    updateCalculator();
+                });
+            });
+
+            // Addon check updates
+            addonCheckboxes.forEach(cb => cb.addEventListener('change', updateCalculator));
+
+            // Initial calculation call
+            updateCalculator();
+
+            // Book package button smooth scroll to form
+            const bookPkgBtn = document.getElementById('book-package-btn');
+            if (bookPkgBtn) {
+                bookPkgBtn.addEventListener('click', () => {
+                    const bookingSection = document.getElementById('booking');
+                    if (bookingSection) {
+                        bookingSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+
+            const track = document.getElementById('testimonial-track');
+            const slides = track ? track.children : [];
+            const prevBtn = document.getElementById('prev-testimonial');
+            const nextBtn = document.getElementById('next-testimonial');
+            const dotsContainer = document.getElementById('carousel-dots');
+            let slideIndex = 0;
+
+            if (track && slides.length > 0) {
+                // Generate dots
+                for (let i = 0; i < slides.length; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `w-2.5 h-2.5 rounded-full transition-all ${i === 0 ? 'bg-brand-amber w-6' : 'bg-gray-600'}`;
+                    dot.addEventListener('click', () => goToSlide(i));
+                    dotsContainer.appendChild(dot);
+                }
+
+                function goToSlide(index) {
+                    slideIndex = index;
+                    track.style.transform = `translateX(-${slideIndex * 100}%)`;
+                    Array.from(dotsContainer.children).forEach((d, i) => {
+                        if (i === slideIndex) {
+                            d.className = 'w-6 h-2.5 rounded-full bg-brand-amber transition-all';
+                        } else {
+                            d.className = 'w-2.5 h-2.5 rounded-full bg-gray-600 transition-all';
+                        }
+                    });
+                }
+
+                prevBtn?.addEventListener('click', () => {
+                    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+                    goToSlide(slideIndex);
+                });
+
+                nextBtn?.addEventListener('click', () => {
+                    slideIndex = (slideIndex + 1) % slides.length;
+                    goToSlide(slideIndex);
+                });
+
+                // Auto slide timer
+                setInterval(() => {
+                    slideIndex = (slideIndex + 1) % slides.length;
+                    goToSlide(slideIndex);
+                }, 7000);
+            }
+
+            function updateLiveStatus() {
+                const now = new Date();
+                const day = now.getDay(); // 0 = Sun, 1 = Mon ...
+                const hour = now.getHours();
+                const min = now.getMinutes();
+                const currentMinutes = hour * 60 + min;
+
+                // Open hours map in minutes
+                // Wed-Thu: 11:30 (690) to 21:00 (1260)
+                // Fri-Sat: 11:30 (690) to 22:30 (1350)
+                // Sun: 12:00 (720) to 20:00 (1200)
+                // Mon-Tue: 11:30 (690) to 20:00 (1200)
+                
+                let isOpen = false;
+                if (day === 0 && currentMinutes >= 720 && currentMinutes <= 1200) isOpen = true;
+                if ((day === 1 || day === 2) && currentMinutes >= 690 && currentMinutes <= 1200) isOpen = true;
+                if ((day === 3 || day === 4) && currentMinutes >= 690 && currentMinutes <= 1260) isOpen = true;
+                if ((day === 5 || day === 6) && currentMinutes >= 690 && currentMinutes <= 1350) isOpen = true;
+
+                const statusText = document.getElementById('status-text');
+                const statusBadge = document.getElementById('live-status-badge');
+                
+                if (statusText && statusBadge) {
+                    if (isOpen) {
+                        statusText.textContent = "Open Now • San José";
+                        statusBadge.className = "flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
+                    } else {
+                        statusText.textContent = "Closed Now • Opens 11:30 AM";
+                        statusBadge.className = "flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200";
+                    }
+                }
+
+                // Highlight today row in hours table
+                const rows = document.querySelectorAll('#hours-table > div');
+                rows.forEach(r => {
+                    if (parseInt(r.getAttribute('data-day')) === day) {
+                        r.classList.add('bg-amber-100/60', 'px-2', 'rounded-lg');
+                    }
+                });
+            }
+
+            updateLiveStatus();
+
+            // 6. Booking Form Submission Confirmation
+            const bookingForm = document.getElementById('catering-booking-form');
+            const confModal = document.getElementById('confirmation-modal');
+            const confCode = document.getElementById('conf-code');
+            const confRecap = document.getElementById('conf-recap');
+            const closeConfBtn = document.getElementById('close-conf-btn');
+
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('form-name').value;
+                    const date = document.getElementById('form-date').value;
+                    const guests = document.getElementById('form-guests').value;
+                    const tier = document.getElementById('form-tier').value;
+
+                    const randomCode = '#SL-' + Math.floor(1000 + Math.random() * 9000);
+                    confCode.textContent = randomCode;
+
+                    confRecap.innerHTML = `
+                        <p class="font-bold text-gray-800">Inquiry Recap:</p>
+                        <p>• <strong>Name:</strong> ${name}</p>
+                        <p>• <strong>Date:</strong> ${date}</p>
+                        <p>• <strong>Guests:</strong> ${guests} guests</p>
+                        <p>• <strong>Tier:</strong> ${tier}</p>
+                    `;
+
+                    confModal.classList.remove('hidden');
+                    bookingForm.reset();
+                });
+            }
+
+            closeConfBtn?.addEventListener('click', () => {
+                confModal.classList.add('hidden');
+            });
+
+            // 7. Back to top button
+            const backToTopBtn = document.getElementById('back-to-top');
+            backToTopBtn?.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 8. Newsletter Form
+            const newsForm = document.getElementById('newsletter-form');
+            newsForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for subscribing to Saul\'s seasonal catering updates!');
+                newsForm.reset();
+            });
+
         });
 
-        // Form submission handler
-        function handleSubmit(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const eventDate = document.getElementById('eventDate').value;
-            const eventType = document.getElementById('eventType').value;
-            const guests = document.getElementById('guests').value;
-            const message = document.getElementById('message').value;
+        function openCustomizerModal(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            if (!item) return;
 
-            // Create mailto link with form data
-            const subject = encodeURIComponent(`Catering Inquiry - ${eventType} on ${eventDate}`);
-            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nEvent Date: ${eventDate}\nEvent Type: ${eventType}\nExpected Guests: ${guests}\n\nMessage:\n${message}`);
-            const mailtoLink = `mailto:info@saulshot dogs.com?subject=${subject}&body=${body}`;
+            document.getElementById('modal-title').textContent = item.title;
+            document.getElementById('modal-price').textContent = `$${item.price}.00`;
+            document.getElementById('modal-desc').textContent = item.description;
+            document.getElementById('modal-category').textContent = item.category.toUpperCase();
+            document.getElementById('modal-spice').textContent = item.spice;
 
-            // Open email client
-            window.location.href = mailtoLink;
+            const toppingsList = document.getElementById('modal-toppings-list');
+            toppingsList.innerHTML = '';
 
-            // Optional: Show feedback
-            alert('Thank you for your inquiry! Opening your email client to send the quote request.');
-            event.target.reset();
+            item.toppings.forEach(top => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center space-x-2 text-gray-700 font-medium cursor-pointer';
+                label.innerHTML = `
+                    <input type="checkbox" checked class="w-4 h-4 text-brand-amber rounded border-gray-300 focus:ring-brand-amber">
+                    <span>${top}</span>
+                `;
+                toppingsList.appendChild(label);
+            });
+
+            document.getElementById('item-modal').classList.remove('hidden');
         }
+
+        document.getElementById('close-modal-btn')?.addEventListener('click', () => {
+            document.getElementById('item-modal').classList.add('hidden');
+        });
+
+        document.getElementById('modal-confirm-btn')?.addEventListener('click', () => {
+            document.getElementById('item-modal').classList.add('hidden');
+            const bookingSec = document.getElementById('booking');
+            if (bookingSec) bookingSec.scrollIntoView({ behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
