@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
+    <script>document.documentElement.classList.add('js');</script>
+
     <style>
         :root {
             --dark: #111827;
@@ -21,6 +23,7 @@
             --gray: #4B5563;
             --line: #E5E7EB;
             --radius: 16px;
+            --ease: cubic-bezier(.22, .8, .26, 1);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
@@ -30,6 +33,7 @@
             color: var(--dark);
             line-height: 1.6;
             padding-bottom: calc(72px + env(safe-area-inset-bottom));
+            overflow-x: hidden;
         }
         img { max-width: 100%; display: block; }
         a { color: inherit; text-decoration: none; }
@@ -41,16 +45,26 @@
         .section-title { font-size: 28px; margin: 8px 0 12px; }
         .section-intro { color: var(--gray); max-width: 560px; }
 
+        .ig-icon { width: 20px; height: 20px; flex: 0 0 auto; }
+
+        /* Scroll progress bar */
+        .progress {
+            position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60;
+            background: linear-gradient(90deg, var(--amber), #FBBF24);
+            transform-origin: 0 50%; transform: scaleX(0);
+            will-change: transform;
+        }
+
         /* Buttons */
         .btn {
-            display: inline-flex; align-items: center; justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             min-height: 52px; padding: 0 26px; border-radius: 12px;
             font-weight: 700; font-size: 16px; border: 2px solid transparent;
-            cursor: pointer; transition: background .2s, color .2s, transform .1s;
+            cursor: pointer; transition: background .2s, color .2s, transform .15s, box-shadow .2s;
         }
         .btn:active { transform: scale(.98); }
         .btn-primary { background: var(--amber); color: #fff; }
-        .btn-primary:hover { background: var(--amber-dark); }
+        .btn-primary:hover { background: var(--amber-dark); box-shadow: 0 8px 24px rgba(217,119,6,.35); transform: translateY(-2px); }
         .btn-ghost { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.55); }
         .btn-ghost:hover { background: rgba(255,255,255,.25); }
         .btn-dark { background: var(--dark); color: #fff; }
@@ -60,41 +74,81 @@
         /* Top bar */
         .topbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-            background: rgba(17,24,39,.92);
+            background: rgba(17,24,39,.55);
             -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
             padding-top: env(safe-area-inset-top);
+            transition: background .3s, box-shadow .3s;
         }
+        .topbar.scrolled { background: rgba(17,24,39,.95); box-shadow: 0 4px 24px rgba(0,0,0,.25); }
         .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
         .logo { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 22px; color: #fff; letter-spacing: .02em; }
         .logo span { color: var(--amber); }
         .topbar-call {
             display: inline-flex; align-items: center; gap: 8px;
             background: var(--amber); color: #fff; font-weight: 700; font-size: 14px;
-            padding: 9px 16px; border-radius: 999px;
+            padding: 9px 16px; border-radius: 999px; transition: transform .15s, background .2s;
         }
+        .topbar-call:hover { background: var(--amber-dark); transform: translateY(-1px); }
 
         /* Hero */
         .hero {
             position: relative; min-height: 100svh; color: #fff;
-            display: flex; align-items: flex-end; padding: 0;
+            display: flex; align-items: flex-end; padding: 0; overflow: hidden;
         }
         .hero img {
-            position: absolute; inset: 0; width: 100%; height: 100%;
+            position: absolute; left: 0; top: -10%; width: 100%; height: 120%;
             object-fit: cover; object-position: 35% center;
+            will-change: transform;
         }
         .hero::after {
             content: ""; position: absolute; inset: 0;
             background: linear-gradient(180deg, rgba(17,24,39,.45) 0%, rgba(17,24,39,.35) 35%, rgba(17,24,39,.92) 100%);
         }
-        .hero-content { position: relative; z-index: 2; padding: 120px 0 40px; }
+        .hero-content { position: relative; z-index: 2; padding: 120px 0 40px; will-change: transform, opacity; }
         .hero h1 { font-size: 38px; margin: 12px 0 14px; }
         .hero h1 em { color: #FBBF24; font-style: normal; }
         .hero p { font-size: 17px; color: #E5E7EB; max-width: 520px; }
         .hero-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; }
+        .scroll-cue {
+            position: absolute; z-index: 2; left: 50%; bottom: 18px; transform: translateX(-50%);
+            width: 26px; height: 42px; border: 2px solid rgba(255,255,255,.6); border-radius: 14px;
+            display: none;
+        }
+        .scroll-cue::after {
+            content: ""; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px;
+            background: #fff; border-radius: 2px; animation: cue 1.8s ease-in-out infinite;
+        }
+        @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
+
+        /* Hero intro (plays on load) */
+        .js .hero-in { opacity: 0; transform: translateY(24px); animation: heroIn .9s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 140ms + 150ms); }
+        @keyframes heroIn { to { opacity: 1; transform: none; } }
+
+        /* Scroll reveal */
+        .js [data-reveal] {
+            opacity: 0; transform: translateY(32px);
+            transition: opacity .8s var(--ease), transform .8s var(--ease);
+            transition-delay: var(--d, 0ms);
+        }
+        .js [data-reveal="left"] { transform: translateX(-36px); }
+        .js [data-reveal="right"] { transform: translateX(36px); }
+        .js [data-reveal="zoom"] { transform: scale(.94); }
+        .js [data-reveal].is-in { opacity: 1; transform: none; }
 
         /* Event types */
         .cards { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 28px; }
-        .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+        .card {
+            background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px;
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ""; position: absolute; left: 0; top: 0; height: 4px; width: 100%;
+            background: linear-gradient(90deg, var(--amber), #FBBF24);
+            transform: scaleX(0); transform-origin: 0 50%; transition: transform .5s var(--ease);
+        }
+        .card:hover { box-shadow: 0 14px 32px rgba(17,24,39,.1); transform: translateY(-4px); }
+        .card:hover::before { transform: scaleX(1); }
+        .js .card[data-reveal].is-in { transition: opacity .8s var(--ease), transform .35s var(--ease), box-shadow .35s; transition-delay: var(--d, 0ms), 0ms, 0ms; }
         .card h3 { font-size: 20px; margin-bottom: 6px; }
         .card p { color: var(--gray); font-size: 15px; }
         .tag { display: inline-block; font-size: 12px; font-weight: 700; color: var(--amber-dark); background: #FEF3C7; padding: 3px 10px; border-radius: 999px; margin-bottom: 12px; }
@@ -109,13 +163,16 @@
             background: var(--amber); color: #fff; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
         }
+        .js .step-num { transform: scale(.4); transition: transform .6s cubic-bezier(.34, 1.56, .64, 1); transition-delay: calc(var(--d, 0ms) + 150ms); }
+        .js .is-in .step-num, .js .step-num.is-in { transform: scale(1); }
         .steps h3 { font-size: 18px; margin-bottom: 2px; }
         .steps p { color: #9CA3AF; font-size: 15px; }
 
         /* Packages */
         .packages { display: grid; gap: 14px; margin-top: 28px; }
         .pkg { background: #fff; border: 2px solid var(--line); border-radius: var(--radius); padding: 22px; }
-        .pkg.featured { border-color: var(--amber); }
+        .pkg.featured { border-color: var(--amber); box-shadow: 0 10px 30px rgba(217,119,6,.15); }
+        .pkg:hover { border-color: var(--amber); }
         .pkg-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
         .pkg h3 { font-size: 20px; }
         .price { font-weight: 700; color: var(--amber-dark); white-space: nowrap; }
@@ -130,9 +187,39 @@
         .review p { margin: 8px 0 10px; font-style: italic; }
         .review small { color: var(--gray); font-weight: 600; }
 
+        /* Instagram band */
+        .ig-band {
+            position: relative; overflow: hidden; color: #fff; text-align: center;
+            background: linear-gradient(135deg, #833AB4 0%, #C13584 35%, #E1306C 60%, #F77737 100%);
+            background-size: 200% 200%; animation: igShift 12s ease-in-out infinite;
+        }
+        @keyframes igShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .ig-band::before, .ig-band::after {
+            content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.1);
+            animation: floaty 7s ease-in-out infinite;
+        }
+        .ig-band::before { width: 220px; height: 220px; left: -70px; top: -60px; }
+        .ig-band::after { width: 160px; height: 160px; right: -40px; bottom: -50px; animation-delay: -3s; }
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+        .ig-band .wrap { position: relative; z-index: 1; max-width: 720px; }
+        .ig-badge {
+            width: 68px; height: 68px; border-radius: 20px; margin: 0 auto 16px;
+            background: #fff; color: #C13584; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,.2); animation: bob 3.2s ease-in-out infinite;
+        }
+        .ig-badge svg { width: 36px; height: 36px; }
+        @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8px) rotate(4deg); } }
+        .ig-band .eyebrow { color: #FDE68A; }
+        .ig-band .section-title { margin-bottom: 10px; }
+        .ig-band p { color: rgba(255,255,255,.92); max-width: 520px; margin: 0 auto; }
+        .ig-handle { display: block; font-weight: 700; font-size: 20px; margin: 16px 0 20px; letter-spacing: .01em; }
+        .btn-white { background: #fff; color: #C13584; }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.25); }
+
         /* Area */
         .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-        .pill { background: #fff; border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+        .pill { background: #fff; border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: background .2s, color .2s, border-color .2s; }
+        .pill:hover { background: var(--amber); color: #fff; border-color: var(--amber); }
 
         /* Form */
         .form-card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 22px; margin-top: 24px; }
@@ -153,6 +240,14 @@
         footer .logo { display: block; margin-bottom: 10px; }
         footer a { color: #E5E7EB; }
         footer p { margin-top: 6px; }
+        .footer-ig {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 12px;
+            padding: 8px 14px; border-radius: 999px; font-weight: 700; color: #fff;
+            background: linear-gradient(135deg, #833AB4, #E1306C 60%, #F77737);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .footer-ig:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(225,48,108,.4); }
+        .footer-ig .ig-icon { width: 18px; height: 18px; }
 
         /* Sticky bottom action bar (mobile) */
         .action-bar {
@@ -175,22 +270,31 @@
             .hero p { font-size: 19px; }
             .hero-actions { flex-direction: row; }
             .hero-content { padding-bottom: 80px; }
+            .scroll-cue { display: block; }
             .cards { grid-template-columns: repeat(2, 1fr); }
             .packages, .reviews { grid-template-columns: repeat(3, 1fr); }
             .steps { grid-template-columns: repeat(3, 1fr); }
             .row { grid-template-columns: 1fr 1fr; gap: 16px; }
             .form-card { padding: 36px; }
         }
+
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .btn { transition: none; }
+            .btn, .card, .card::before, .topbar { transition: none; }
+            .js .hero-in { animation: none; opacity: 1; transform: none; }
+            .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+            .js .step-num { transform: none; transition: none; }
+            .scroll-cue::after, .ig-band, .ig-band::before, .ig-band::after, .ig-badge { animation: none; }
+            .progress { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
     <!-- Top bar: logo and one tap-to-call button, no menu -->
-    <header class="topbar">
+    <header class="topbar" id="topbar">
         <div class="wrap">
             <a href="#top" class="logo">SAUL<span>'S</span></a>
             <a href="tel:+19259847186" class="topbar-call" aria-label="Call Saul's Catering">Call Us</a>
@@ -200,43 +304,44 @@
     <main id="top">
 
         <!-- Hero -->
-        <section class="hero">
-            <img src="images/hero.jpg" alt="Aerial view of the Golden Gate Bridge with the San Francisco skyline and Bay Bridge behind it" fetchpriority="high">
-            <div class="wrap hero-content">
-                <span class="eyebrow" style="color:#FBBF24;">Bay Area Event Catering</span>
-                <h1>Gourmet catering for <em>every Bay Area event.</em></h1>
-                <p>Weddings, company events and private parties. We bring the grill, the staff and the setup so you can enjoy your guests.</p>
-                <div class="hero-actions">
+        <section class="hero" id="hero">
+            <img id="hero-img" src="images/hero.jpg" alt="Aerial view of the Golden Gate Bridge with the San Francisco skyline and Bay Bridge behind it" fetchpriority="high">
+            <div class="wrap hero-content" id="hero-content">
+                <span class="eyebrow hero-in" style="color:#FBBF24;--i:0">Bay Area Event Catering</span>
+                <h1 class="hero-in" style="--i:1">Gourmet catering for <em>every Bay Area event.</em></h1>
+                <p class="hero-in" style="--i:2">Weddings, company events and private parties. We bring the grill, the staff and the setup so you can enjoy your guests.</p>
+                <div class="hero-actions hero-in" style="--i:3">
                     <a href="#quote" class="btn btn-primary">Request a Quote</a>
                     <a href="tel:+19259847186" class="btn btn-ghost">Call (925) 984-7186</a>
                 </div>
             </div>
+            <div class="scroll-cue" aria-hidden="true"></div>
         </section>
 
         <!-- What we cater -->
         <section id="events">
             <div class="wrap">
-                <span class="eyebrow">What We Cater</span>
-                <h2 class="section-title">Events of every size</h2>
-                <p class="section-intro">From 20 guests in a backyard to 500+ at your business event, we handle the food and the service.</p>
+                <span class="eyebrow" data-reveal>What We Cater</span>
+                <h2 class="section-title" data-reveal style="--d:80ms">Events of every size</h2>
+                <p class="section-intro" data-reveal style="--d:160ms">From 20 guests in a backyard to 500+ at your business event, we handle the food and the service.</p>
 
-                <div class="cards">
-                    <div class="card">
+                <div class="cards" data-stagger>
+                    <div class="card" data-reveal>
                         <span class="tag">50 to 500+ guests</span>
                         <h3>Corporate Events</h3>
                         <p>Team lunches, launches and campus activations. Boxed meals or live stations, with direct invoicing available.</p>
                     </div>
-                    <div class="card">
+                    <div class="card" data-reveal>
                         <span class="tag">Full service</span>
                         <h3>Weddings &amp; Galas</h3>
                         <p>Late-night snack stations, cocktail hours and rehearsal dinners with custom branded wrappers.</p>
                     </div>
-                    <div class="card">
+                    <div class="card" data-reveal>
                         <span class="tag">20+ guests</span>
                         <h3>Private Parties</h3>
                         <p>Birthdays, graduations and block parties. Our compact setup fits backyards and patios with zero fuss cleanup.</p>
                     </div>
-                    <div class="card">
+                    <div class="card" data-reveal>
                         <span class="tag">Live grill</span>
                         <h3>Food Truck</h3>
                         <p>Our truck pulls up to your venue and serves fast. Great for festivals, office parks and community events.</p>
@@ -248,26 +353,26 @@
         <!-- How it works -->
         <section class="steps-bg">
             <div class="wrap">
-                <span class="eyebrow">How It Works</span>
-                <h2 class="section-title">Booking is simple</h2>
-                <p class="section-intro">Three steps from first message to a fed crowd.</p>
+                <span class="eyebrow" data-reveal>How It Works</span>
+                <h2 class="section-title" data-reveal style="--d:80ms">Booking is simple</h2>
+                <p class="section-intro" data-reveal style="--d:160ms">Three steps from first message to a fed crowd.</p>
 
-                <ol class="steps">
-                    <li>
+                <ol class="steps" data-stagger="180">
+                    <li data-reveal>
                         <div class="step-num">1</div>
                         <div>
                             <h3>Tell us about your event</h3>
                             <p>Date, guest count and location. It takes about a minute.</p>
                         </div>
                     </li>
-                    <li>
+                    <li data-reveal>
                         <div class="step-num">2</div>
                         <div>
                             <h3>Get a custom quote</h3>
                             <p>Our event team replies within 2 business hours with options that fit your budget.</p>
                         </div>
                     </li>
-                    <li>
+                    <li data-reveal>
                         <div class="step-num">3</div>
                         <div>
                             <h3>We handle the rest</h3>
@@ -281,46 +386,46 @@
         <!-- Packages -->
         <section id="packages">
             <div class="wrap">
-                <span class="eyebrow">Catering Packages</span>
-                <h2 class="section-title">Simple per-guest pricing</h2>
-                <p class="section-intro">Pick a starting point and we will tailor it to your event.</p>
+                <span class="eyebrow" data-reveal>Catering Packages</span>
+                <h2 class="section-title" data-reveal style="--d:80ms">Simple per-guest pricing</h2>
+                <p class="section-intro" data-reveal style="--d:160ms">Pick a starting point and we will tailor it to your event.</p>
 
-                <div class="packages">
-                    <div class="pkg">
+                <div class="packages" data-stagger="140">
+                    <div class="pkg" data-reveal="zoom">
                         <div class="pkg-head"><h3>Classic Craft</h3><span class="price">$18 / guest</span></div>
                         <p>Two signature dogs, kettle chips and house lemonade.</p>
                     </div>
-                    <div class="pkg featured">
+                    <div class="pkg featured" data-reveal="zoom">
                         <div class="pkg-head"><h3>Artisanal Gourmet</h3><span class="price">$26 / guest</span></div>
                         <p>Full signature and wagyu selection, two gourmet sides and craft beverages.</p>
                     </div>
-                    <div class="pkg">
+                    <div class="pkg" data-reveal="zoom">
                         <div class="pkg-head"><h3>Executive Reserve</h3><span class="price">$38 / guest</span></div>
                         <p>Live grill chef station, wagyu and vegan options, truffle sides and desserts.</p>
                     </div>
                 </div>
-                <p class="fineprint">Starting prices. Service fee, tax and add-ons like staffing are quoted separately. Vegan, vegetarian and gluten-free options available on every package.</p>
+                <p class="fineprint" data-reveal>Starting prices. Service fee, tax and add-ons like staffing are quoted separately. Vegan, vegetarian and gluten-free options available on every package.</p>
             </div>
         </section>
 
         <!-- Reviews -->
         <section class="reviews-bg">
             <div class="wrap">
-                <span class="eyebrow">Client Feedback</span>
-                <h2 class="section-title">Trusted around the Bay</h2>
+                <span class="eyebrow" data-reveal>Client Feedback</span>
+                <h2 class="section-title" data-reveal style="--d:80ms">Trusted around the Bay</h2>
 
-                <div class="reviews">
-                    <div class="review">
+                <div class="reviews" data-stagger="140">
+                    <div class="review" data-reveal>
                         <div class="stars">★★★★★</div>
                         <p>"Saul's catered our event. Smooth logistics and effortless booking."</p>
                         <small>Kenneth S., Client</small>
                     </div>
-                    <div class="review">
+                    <div class="review" data-reveal>
                         <div class="stars">★★★★★</div>
                         <p>"We booked Saul's 2 months ago and my friends are still raving about the Elote Caliente dogs!"</p>
                         <small>Elena &amp; Liam Vance, Event Hosts</small>
                     </div>
-                    <div class="review">
+                    <div class="review" data-reveal>
                         <div class="stars">★★★★★</div>
                         <p>"The food was incredible."</p>
                         <small>Devon Kroll, Birthday Host, San Francisco</small>
@@ -329,18 +434,35 @@
             </div>
         </section>
 
+        <!-- Instagram feature (location 1 of 2) -->
+        <section class="ig-band" id="instagram">
+            <div class="wrap">
+                <div class="ig-badge" data-reveal="zoom" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </div>
+                <span class="eyebrow" data-reveal style="--d:80ms">Follow the Cart</span>
+                <h2 class="section-title" data-reveal style="--d:140ms">See what we are grilling</h2>
+                <p data-reveal style="--d:200ms">Event recaps, new menu drops and where the cart is parked next. Follow along and tag us at your party.</p>
+                <span class="ig-handle" data-reveal style="--d:260ms">@SaulsCartsandCatering</span>
+                <a class="btn btn-white" data-reveal style="--d:320ms" href="https://www.instagram.com/SaulsCartsandCatering/" target="_blank" rel="noopener noreferrer">
+                    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                    Follow on Instagram
+                </a>
+            </div>
+        </section>
+
         <!-- Service area -->
         <section id="area">
             <div class="wrap">
-                <span class="eyebrow">Service Area</span>
-                <h2 class="section-title">Based in San José, serving the whole Bay</h2>
-                <p class="section-intro">Free delivery within 25 miles of Downtown San José. Farther events are quoted with a small travel fee.</p>
-                <div class="pills">
-                    <span class="pill">San José &amp; South Bay</span>
-                    <span class="pill">San Francisco</span>
-                    <span class="pill">Peninsula &amp; Palo Alto</span>
-                    <span class="pill">East Bay &amp; Oakland</span>
-                    <span class="pill">Marin</span>
+                <span class="eyebrow" data-reveal>Service Area</span>
+                <h2 class="section-title" data-reveal style="--d:80ms">Based in San José, serving the whole Bay</h2>
+                <p class="section-intro" data-reveal style="--d:160ms">Free delivery within 25 miles of Downtown San José. Farther events are quoted with a small travel fee.</p>
+                <div class="pills" data-stagger="90">
+                    <span class="pill" data-reveal="zoom">San José &amp; South Bay</span>
+                    <span class="pill" data-reveal="zoom">San Francisco</span>
+                    <span class="pill" data-reveal="zoom">Peninsula &amp; Palo Alto</span>
+                    <span class="pill" data-reveal="zoom">East Bay &amp; Oakland</span>
+                    <span class="pill" data-reveal="zoom">Marin</span>
                 </div>
             </div>
         </section>
@@ -348,11 +470,11 @@
         <!-- Quote form -->
         <section id="quote" style="background:#fff;border-top:1px solid var(--line);">
             <div class="wrap" style="max-width:720px;">
-                <span class="eyebrow">Request a Quote</span>
-                <h2 class="section-title">Let's plan your event</h2>
-                <p class="section-intro">Share a few details and we will check your date and send a custom quote.</p>
+                <span class="eyebrow" data-reveal>Request a Quote</span>
+                <h2 class="section-title" data-reveal style="--d:80ms">Let's plan your event</h2>
+                <p class="section-intro" data-reveal style="--d:160ms">Share a few details and we will check your date and send a custom quote.</p>
 
-                <form id="quote-form" class="form-card">
+                <form id="quote-form" class="form-card" data-reveal style="--d:200ms">
                     <div class="row">
                         <div class="field">
                             <label for="name">Full name</label>
@@ -411,6 +533,11 @@
             <p>96 South First Street, San José, CA 95113</p>
             <p><a href="tel:+19259847186">(925) 984-7186</a></p>
             <p><a href="mailto:saulshotdogs@gmail.com"> Email </a></p>
+            <!-- Instagram (location 2 of 2) -->
+            <a class="footer-ig" href="https://www.instagram.com/SaulsCartsandCatering/" target="_blank" rel="noopener noreferrer" aria-label="Saul's on Instagram, @SaulsCartsandCatering">
+                <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                @SaulsCartsandCatering
+            </a>
             <p style="margin-top:18px;">© 2026 Saul's Hot Dogs &amp; Gourmet Catering. All rights reserved.</p>
         </div>
     </footer>
@@ -446,6 +573,60 @@
             var subject = 'Catering inquiry: ' + f.type.value + ' on ' + f.date.value;
             window.location.href = 'mailto:catering@saulsgourmet.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
         });
+
+        // ---- Scroll animations ----
+        (function () {
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Stagger children inside any [data-stagger] container
+            document.querySelectorAll('[data-stagger]').forEach(function (group) {
+                var step = parseInt(group.getAttribute('data-stagger'), 10) || 110;
+                group.querySelectorAll(':scope > [data-reveal]').forEach(function (el, i) {
+                    el.style.setProperty('--d', (i * step) + 'ms');
+                });
+            });
+
+            // Reveal on enter
+            var targets = document.querySelectorAll('[data-reveal]');
+            if (reduce || !('IntersectionObserver' in window)) {
+                targets.forEach(function (el) { el.classList.add('is-in'); });
+            } else {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-in');
+                            io.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+                targets.forEach(function (el) { io.observe(el); });
+            }
+
+            // Scroll-linked effects: progress bar, topbar, hero parallax
+            var bar = document.getElementById('progress');
+            var topbar = document.getElementById('topbar');
+            var heroImg = document.getElementById('hero-img');
+            var heroContent = document.getElementById('hero-content');
+            var ticking = false;
+
+            function update() {
+                var y = window.pageYOffset || document.documentElement.scrollTop;
+                var max = document.documentElement.scrollHeight - window.innerHeight;
+                bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+                topbar.classList.toggle('scrolled', y > 40);
+
+                if (!reduce && y < window.innerHeight * 1.2) {
+                    heroImg.style.transform = 'translate3d(0,' + (y * 0.25).toFixed(1) + 'px,0)';
+                    heroContent.style.transform = 'translate3d(0,' + (y * -0.08).toFixed(1) + 'px,0)';
+                    heroContent.style.opacity = Math.max(1 - y / (window.innerHeight * 0.9), 0);
+                }
+                ticking = false;
+            }
+            window.addEventListener('scroll', function () {
+                if (!ticking) { ticking = true; requestAnimationFrame(update); }
+            }, { passive: true });
+            update();
+        })();
     </script>
 </body>
 </html>
